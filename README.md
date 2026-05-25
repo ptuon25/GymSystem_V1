@@ -47,14 +47,6 @@ src/main/java/com/tuon
 - Sistema de autenticação
 - Hash de senhas com BCrypt
 
-## Configuração do banco de dados
-
-
-Criar banco MySQL:
-
-```sql
-CREATE DATABASE gym_system;
-
 ## Como executar
 
 Entre na pasta:
