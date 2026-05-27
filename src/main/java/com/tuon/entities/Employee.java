@@ -1,3 +1,5 @@
+// classe dos funcionários da academia
+
 package com.tuon.entities;
 
 import com.tuon.enums.EmployeeRole;

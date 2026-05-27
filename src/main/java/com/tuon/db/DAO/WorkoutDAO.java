@@ -1,4 +1,4 @@
-package com.tuon.db;
+package com.tuon.db.DAO;
 
 import com.tuon.entities.Workout;
 

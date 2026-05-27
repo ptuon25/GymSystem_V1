@@ -1,4 +1,4 @@
-package com.tuon.services;
+package com.tuon.services.passwords;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 

@@ -1,7 +1,8 @@
-package com.tuon.services;
+package com.tuon.services.passwords;
 
-import com.tuon.db.EmployeeDAO;
+import com.tuon.db.DAO.EmployeeDAO;
 import com.tuon.entities.Employee;
+import com.tuon.exceptions.AuthException;
 
 /**
  * Serviço de autenticação (simples). Não emite tokens — retorna o Employee autenticado.

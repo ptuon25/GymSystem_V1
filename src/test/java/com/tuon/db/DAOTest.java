@@ -1,5 +1,10 @@
 package com.tuon.db;
 
+import com.tuon.db.DAOImpl.EmployeeDAOImpl;
+import com.tuon.db.DAOImpl.ExerciseDAOImpl;
+import com.tuon.db.DAOImpl.GymUserDAOImpl;
+import com.tuon.db.DAOImpl.WorkoutDAOImpl;
+import com.tuon.db.connection.DbConnection;
 import com.tuon.entities.Employee;
 import com.tuon.entities.Exercise;
 import com.tuon.entities.GymUser;
@@ -49,7 +54,7 @@ public class DAOTest {
 
     private static void testUserDAO() {
         Connection conn = DbConnection.getConnection();
-        UserDAOImpl userDAO = new UserDAOImpl(conn);
+        GymUserDAOImpl userDAO = new GymUserDAOImpl(conn);
 
         System.out.println("   → INSERT user...");
         GymUser user = new GymUser(null, "Ana Silva", 28, 1.65, 62.0);
@@ -140,9 +145,9 @@ public class DAOTest {
 
     private static void testWorkoutDAO() {
         Connection conn = DbConnection.getConnection();
-        WorkoutDAOimpl workoutDAO = new WorkoutDAOimpl(conn);
+        WorkoutDAOImpl workoutDAO = new WorkoutDAOImpl(conn);
         ExerciseDAOImpl exerciseDAO = new ExerciseDAOImpl(conn);
-        UserDAOImpl userDAO = new UserDAOImpl(conn);
+        GymUserDAOImpl userDAO = new GymUserDAOImpl(conn);
 
         System.out.println("   → Setup: creating user...");
         GymUser user = new GymUser(null, "Carlos", 35, 1.80, 80.0);

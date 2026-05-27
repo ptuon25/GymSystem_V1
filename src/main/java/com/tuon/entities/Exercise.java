@@ -1,3 +1,5 @@
+// classe do exercício físico cadastrado no sistema
+
 package com.tuon.entities;
 
 import com.tuon.enums.Difficulty;

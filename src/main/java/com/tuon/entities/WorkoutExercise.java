@@ -1,3 +1,5 @@
+// classe de um exercício dentro de um treino
+
 package com.tuon.entities;
 
 public class WorkoutExercise {
@@ -5,7 +7,7 @@ public class WorkoutExercise {
     private Integer workoutId;
     private Exercise exercise;
 
-    private Integer steps;
+    private Integer sets;
     private Integer reps;
     private Double weight;
     private Integer restSeconds;
@@ -17,10 +19,10 @@ public class WorkoutExercise {
     }
 
     //construtor padrão
-    public WorkoutExercise(Exercise exercise, Integer workoutId, Integer steps, Integer reps, Double weight, Integer restSeconds, Integer position) {
+    public WorkoutExercise(Exercise exercise, Integer workoutId, Integer sets, Integer reps, Double weight, Integer restSeconds, Integer position) {
         this.exercise = exercise;
         this.workoutId = workoutId;
-        this.steps = steps;
+        this.sets = sets;
         this.reps = reps;
         this.weight = weight;
         this.restSeconds = restSeconds;
@@ -44,12 +46,12 @@ public class WorkoutExercise {
         this.workoutId = workoutId;
     }
 
-    public Integer getSteps() {
-        return steps;
+    public Integer getSets() {
+        return sets;
     }
 
-    public void setSteps(Integer steps) {
-        this.steps = steps;
+    public void setSets(Integer sets) {
+        this.sets = sets;
     }
 
     public Integer getReps() {
@@ -86,17 +88,17 @@ public class WorkoutExercise {
 
     // cálculo de volume
     public double calculateVolume(){
-        if (steps == 0 || reps == null || weight == null){
+        if (sets == 0 || reps == null || weight == null){
             return 0.0;
         }
-        return steps * reps * weight;
+        return sets * reps * weight;
     }
 
     @Override
     public String toString() {
         return "WorkoutExercise{" +
                 "exercise=" + (exercise != null ? exercise.getName() : "null") +
-                ", steps=" + steps +
+                ", steps=" + sets +
                 ", reps=" + reps +
                 ", weight=" + weight +
                 ", restSeconds=" + restSeconds +

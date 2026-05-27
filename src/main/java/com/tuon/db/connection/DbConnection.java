@@ -1,4 +1,6 @@
-package com.tuon.db;
+package com.tuon.db.connection;
+
+import com.tuon.exceptions.DbException;
 
 import java.io.IOException;
 import java.sql.Connection;

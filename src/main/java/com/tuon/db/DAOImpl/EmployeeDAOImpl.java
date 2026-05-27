@@ -1,5 +1,8 @@
-package com.tuon.db;
+package com.tuon.db.DAOImpl;
 
+import com.tuon.db.DAO.EmployeeDAO;
+import com.tuon.exceptions.DbException;
+import com.tuon.db.connection.DbConnection;
 import com.tuon.entities.Employee;
 import com.tuon.enums.EmployeeRole;
 
@@ -17,11 +20,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public void insert(Employee employee) {
-        String sql = "INSERT INTO employee (username, password_hash, name, role, salary) VALUES (?, ?, ?, ?, ?)";
+        String sql1 = "INSERT INTO employee (username, password_hash, name, role, salary) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
-            st = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            st = conn.prepareStatement(sql1, PreparedStatement.RETURN_GENERATED_KEYS);
             st.setString(1, employee.getUsername());
             st.setString(2, employee.getPasswordHash());
             st.setString(3, employee.getName());
@@ -29,7 +32,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             st.setObject(5, employee.getSalary(), Types.DOUBLE);
 
             int rowsAffected = st.executeUpdate();
-
             if (rowsAffected > 0) {
                 rs = st.getGeneratedKeys();
                 if (rs != null && rs.next()) {
@@ -57,10 +59,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public void update(Employee employee) {
-        String sql = "UPDATE employee SET username = ?, password_hash = ?, name = ?, role = ?, salary = ? WHERE id = ?";
+        String sql2 = "UPDATE employee SET username = ?, password_hash = ?, name = ?, role = ?, salary = ? WHERE id = ?";
         PreparedStatement st = null;
         try {
-            st = conn.prepareStatement(sql);
+            st = conn.prepareStatement(sql2);
             st.setString(1, employee.getUsername());
             st.setString(2, employee.getPasswordHash());
             st.setString(3, employee.getName());
@@ -81,10 +83,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public void deleteById(Integer id) {
-        String sql = "DELETE FROM employee WHERE id = ?";
+        String sql3 = "DELETE FROM employee WHERE id = ?";
         PreparedStatement st = null;
         try {
-            st = conn.prepareStatement(sql);
+            st = conn.prepareStatement(sql3);
             st.setInt(1, id);
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {
@@ -99,11 +101,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public Employee findById(Integer id) {
-        String sql = "SELECT id, username, password_hash, name, role, salary FROM employee WHERE id = ?";
+        String sql4 = "SELECT id, username, password_hash, name, role, salary FROM employee WHERE id = ?";
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
-            st = conn.prepareStatement(sql);
+            st = conn.prepareStatement(sql4);
             st.setInt(1, id);
             rs = st.executeQuery();
             if (rs.next()) {
@@ -120,14 +122,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public List<Employee> findAll() {
-        String sql = "SELECT id, username, password_hash, name, role, salary FROM employee ORDER BY name";
+        String sql5 = "SELECT id, username, password_hash, name, role, salary FROM employee ORDER BY name";
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
-            st = conn.prepareStatement(sql);
+            st = conn.prepareStatement(sql5);
             rs = st.executeQuery();
 
             List<Employee> list = new ArrayList<>();
+
             while (rs.next()) {
                 list.add(instantiateEmployee(rs));
             }
@@ -144,11 +147,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
      * Método para autenticação: busca funcionário por username
      */
     public Employee findByUsername(String username) {
-        String sql = "SELECT id, username, password_hash, name, role, salary FROM employee WHERE username = ?";
+        String sql6 = "SELECT id, username, password_hash, name, role, salary FROM employee WHERE username = ?";
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
-            st = conn.prepareStatement(sql);
+            st = conn.prepareStatement(sql6);
             st.setString(1, username);
             rs = st.executeQuery();
             if (rs.next()) {

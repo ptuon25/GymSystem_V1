@@ -1,3 +1,5 @@
+// classe do aluno da academia
+
 package com.tuon.entities;
 
 public class GymUser {

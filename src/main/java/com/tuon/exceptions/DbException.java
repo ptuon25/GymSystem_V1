@@ -1,4 +1,4 @@
-package com.tuon.db;
+package com.tuon.exceptions;
 
 public class DbException extends RuntimeException{
 

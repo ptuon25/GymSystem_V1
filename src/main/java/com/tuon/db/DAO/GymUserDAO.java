@@ -1,10 +1,10 @@
-package com.tuon.db;
+package com.tuon.db.DAO;
 
 import com.tuon.entities.GymUser;
 
 import java.util.List;
 
-public interface UserDAO {
+public interface GymUserDAO {
 
     void insert(GymUser user);
 

@@ -5,13 +5,9 @@
 
 package com.tuon.app;
 
-import com.tuon.db.DbConnection;
-import com.tuon.db.UserDAO;
-import com.tuon.db.UserDAOImpl;
+import com.tuon.db.connection.DbConnection;
 import com.tuon.entities.GymUser;
 
-import java.sql.SQLOutput;
-import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
