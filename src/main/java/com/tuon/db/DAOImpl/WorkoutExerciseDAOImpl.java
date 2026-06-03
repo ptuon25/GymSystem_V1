@@ -53,8 +53,7 @@ public class WorkoutExerciseDAOImpl implements WorkoutExerciseDAO {
     @Override
     public void update(WorkoutExercise workoutExercise) {
 
-        String sql2 = "UPDATE workout_exercises SET sets = ?, reps = ?, weight = ?, rest_seconds = ?, position = ? WHERE workout_id = ? AND exercise_id = ?";
-
+        String sql2 = "UPDATE workout_exercises SET sets = ?, reps = ?, weight = ?, rest_seconds = ?, position = ? WHERE id = ?";
         PreparedStatement st = null;
 
         try {
@@ -64,8 +63,7 @@ public class WorkoutExerciseDAOImpl implements WorkoutExerciseDAO {
             st.setDouble(3, workoutExercise.getWeight());
             st.setInt(4, workoutExercise.getRestSeconds());
             st.setInt(5, workoutExercise.getPosition());
-            st.setInt(6, workoutExercise.getWorkoutId());
-            st.setInt(7, workoutExercise.getExercise().getId());
+            st.setInt(6, workoutExercise.getId());
             int rowsAffected = st.executeUpdate();
 
             if (rowsAffected == 0) {
@@ -123,7 +121,8 @@ public class WorkoutExerciseDAOImpl implements WorkoutExerciseDAO {
 
     @Override
     public WorkoutExercise findByWorkoutAndExercise(Integer workoutId, Integer exerciseId) {
-        String sql5 = "SELECT we.workout_id,\n" +
+        String sql5 = "SELECT we.id, \n" + "" +
+                "we.workout_id,\n" +
                 "       we.exercise_id,\n" +
                 "       we.sets,\n" +
                 "       we.reps,\n" +
@@ -161,7 +160,8 @@ public class WorkoutExerciseDAOImpl implements WorkoutExerciseDAO {
     @Override
     public List<WorkoutExercise> findByWorkoutId(Integer workoutId) {
         String sql6 = """
-                    SELECT we.workout_id,
+                    SELECT we.id,
+                        we.workout_id,
                            we.exercise_id,
                            we.sets,
                            we.reps,
@@ -198,7 +198,7 @@ public class WorkoutExerciseDAOImpl implements WorkoutExerciseDAO {
 
     @Override
     public List<WorkoutExercise> findAll() {
-        String sql7 = "SELECT we.workout_id,\n" +
+        String sql7 = "SELECT we.id, we.workout_id,\n" +
                 "       we.exercise_id,\n" +
                 "       we.sets,\n" +
                 "       we.reps,\n" +
@@ -262,6 +262,7 @@ public class WorkoutExerciseDAOImpl implements WorkoutExerciseDAO {
 
         WorkoutExercise we = new WorkoutExercise();
 
+        we.setId(rs.getInt("id"));
         we.setWorkoutId(rs.getInt("workout_id"));
 
         Exercise ex = new Exercise();

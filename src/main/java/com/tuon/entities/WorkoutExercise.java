@@ -4,6 +4,8 @@ package com.tuon.entities;
 
 public class WorkoutExercise {
 
+    private Integer id;
+
     private Integer workoutId;
     private Exercise exercise;
 
@@ -19,7 +21,8 @@ public class WorkoutExercise {
     }
 
     //construtor padrão
-    public WorkoutExercise(Exercise exercise, Integer workoutId, Integer sets, Integer reps, Double weight, Integer restSeconds, Integer position) {
+    public WorkoutExercise(Integer id, Exercise exercise, Integer workoutId, Integer sets, Integer reps, Double weight, Integer restSeconds, Integer position) {
+        this.id = id;
         this.exercise = exercise;
         this.workoutId = workoutId;
         this.sets = sets;
@@ -30,6 +33,14 @@ public class WorkoutExercise {
     }
 
     //getters e setters
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public Exercise getExercise() {
         return exercise;
     }
@@ -87,8 +98,8 @@ public class WorkoutExercise {
     }
 
     // cálculo de volume
-    public double calculateVolume(){
-        if (sets == 0 || reps == null || weight == null){
+    public double calculateVolume() {
+        if (sets == 0 || reps == null || weight == null) {
             return 0.0;
         }
         return sets * reps * weight;
@@ -96,14 +107,15 @@ public class WorkoutExercise {
 
     @Override
     public String toString() {
-        return "WorkoutExercise{" +
-                "exercise=" + (exercise != null ? exercise.getName() : "null") +
+        return "WorkoutExercise{ " +
+                "id= " + id +
+                ", exercise=" + (exercise != null ? exercise.getName() : "null") +
                 ", steps=" + sets +
                 ", reps=" + reps +
                 ", weight=" + weight +
                 ", restSeconds=" + restSeconds +
                 ", position=" + position +
                 ", volume=" + calculateVolume() +
-                '}';
+                " }";
     }
 }

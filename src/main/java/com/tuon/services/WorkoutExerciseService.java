@@ -1,8 +1,6 @@
 package com.tuon.services;
 
-import com.tuon.db.DAO.ExerciseDAO;
 import com.tuon.db.DAO.WorkoutExerciseDAO;
-import com.tuon.db.DAOImpl.ExerciseDAOImpl;
 import com.tuon.db.DAOImpl.WorkoutExerciseDAOImpl;
 import com.tuon.db.connection.DbConnection;
 import com.tuon.entities.WorkoutExercise;
@@ -28,7 +26,7 @@ public class WorkoutExerciseService {
         }
     }
 
-    public void validateForCreate(WorkoutExercise workoutExercise) {
+    private void validateForCreate(WorkoutExercise workoutExercise) {
 
         if (workoutExercise == null) {
             throw new ServiceException("WorkoutExercise cannot be null");
@@ -60,7 +58,8 @@ public class WorkoutExerciseService {
         try {
             Connection conn = DbConnection.getConnection();
             WorkoutExerciseDAO workoutExerciseDAO = new WorkoutExerciseDAOImpl(conn);
-            validadeForUpdate(workoutExercise);
+            validateForCreate(workoutExercise);
+            validateForUpdate(workoutExercise);
             workoutExerciseDAO.update(workoutExercise);
             return workoutExercise;
         } catch (Exception e) {
@@ -70,9 +69,12 @@ public class WorkoutExerciseService {
         }
     }
 
-    public void validadeForUpdate(WorkoutExercise workoutExercise) {
+    private void validateForUpdate(WorkoutExercise workoutExercise) {
         if (workoutExercise == null) {
             throw new ServiceException("WorkoutExercise cannot be null");
+        }
+        if (workoutExercise.getId() == null || workoutExercise.getId() <= 0) {
+            throw new ServiceException("WorkoutExercise id cannot be null or less than or equal to 0");
         }
         if (workoutExercise.getWorkoutId() == null || workoutExercise.getWorkoutId() <= 0) {
             throw new ServiceException("WorkoutExercise workoutId cannot be null or less than or equal to 0");
@@ -136,7 +138,7 @@ public class WorkoutExerciseService {
         try {
             Connection conn = DbConnection.getConnection();
             WorkoutExerciseDAO workoutExerciseDAO = new WorkoutExerciseDAOImpl(conn);
-            return workoutExerciseDAO.findAll().stream().filter(we -> we.getExercise() != null).toList();
+            return workoutExerciseDAO.findAll().stream().filter(we -> we.getExercise() == null || we.getReps() <= 0 || we.getSets() <= 0 || we.getWeight() < 0 ).toList();
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
         } finally {
@@ -149,6 +151,63 @@ public class WorkoutExerciseService {
             Connection conn = DbConnection.getConnection();
             WorkoutExerciseDAO dao = new WorkoutExerciseDAOImpl(conn);
             dao.batchInsert(list);
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage());
+        } finally {
+            DbConnection.closeConnection();
+        }
+    }
+
+    public List<WorkoutExercise> findHeaviestExercises() {
+        try {
+            Connection conn = DbConnection.getConnection();
+            WorkoutExerciseDAO workoutExerciseDAO = new WorkoutExerciseDAOImpl(conn);
+            List<WorkoutExercise> allExercises = workoutExerciseDAO.findAll();
+            double maxWeight = allExercises.stream().filter(we -> we.getWeight() != null).mapToDouble(WorkoutExercise::getWeight).max().orElse(0);
+            return allExercises.stream().filter(we -> we.getWeight() != null && we.getWeight() == maxWeight).toList();
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage());
+        } finally {
+            DbConnection.closeConnection();
+        }
+    }
+
+        public List<WorkoutExercise> findLongestRestExercises () {
+            try {
+                Connection conn = DbConnection.getConnection();
+                WorkoutExerciseDAO workoutExerciseDAO = new WorkoutExerciseDAOImpl(conn);
+                List<WorkoutExercise> allExercises = workoutExerciseDAO.findAll();
+                int maxRestSeconds = allExercises.stream().filter(we -> we.getRestSeconds() != null).mapToInt(WorkoutExercise::getRestSeconds).max().orElse(0);
+                return allExercises.stream().filter(we -> we.getRestSeconds() != null && we.getRestSeconds() == maxRestSeconds).toList();
+            } catch (Exception e) {
+                throw new ServiceException(e.getMessage());
+            } finally {
+                DbConnection.closeConnection();
+            }
+        }
+
+        public List<WorkoutExercise> findAllOrdered(){
+        try{
+            Connection conn = DbConnection.getConnection();
+            WorkoutExerciseDAO workoutExerciseDAO = new WorkoutExerciseDAOImpl(conn);
+            List<WorkoutExercise> allExercises = workoutExerciseDAO.findAll();
+            return allExercises.stream().sorted(Comparator.comparing(WorkoutExercise::getWorkoutId).thenComparing(we -> we.getExercise().getId())).toList();
+        } catch (Exception exception) {
+                throw new ServiceException(exception.getMessage());
+        } finally {
+            DbConnection.closeConnection();
+        }
+
+    }
+
+    public List<WorkoutExercise> findExercisesByWorkout(Integer workoutId){
+        try{
+            Connection conn = DbConnection.getConnection();
+            WorkoutExerciseDAO workoutExerciseDAO = new WorkoutExerciseDAOImpl(conn);
+            if (workoutId == null || workoutId <= 0){
+                throw new ServiceException("WorkoutExercise workoutId cannot be null or less than or equal to 0");
+            }
+            return workoutExerciseDAO.findByWorkoutId(workoutId).stream().sorted(Comparator.comparing(WorkoutExercise::getPosition)).toList();
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
         } finally {

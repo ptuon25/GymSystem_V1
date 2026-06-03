@@ -8,6 +8,7 @@ import com.tuon.enums.EmployeeRole;
 import com.tuon.exceptions.ServiceException;
 import com.tuon.services.passwords.PasswordUtil;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class EmployeeService {
         if (employee.getRole() == null) {
             throw new ServiceException("Employee role cannot be null");
         }
-        if (employee.getSalary() == null || employee.getSalary() == 0.0) {
+        if (employee.getSalary() == null || employee.getSalary().compareTo(BigDecimal.ZERO) == 0) {
             throw new ServiceException("Employee salary cannot be null or empty");
         }
     }
@@ -92,7 +93,7 @@ public class EmployeeService {
         if (employee.getName() == null || employee.getName().trim().isEmpty())
             throw new ServiceException("Name required");
         if (employee.getRole() == null) throw new ServiceException("Role required");
-        if (employee.getSalary() == null || employee.getSalary() <= 0) throw new ServiceException("Salary must be > 0");
+        if (employee.getSalary() == null || employee.getSalary().compareTo(BigDecimal.ZERO) <= 0) throw new ServiceException("Salary must be > 0");
     }
 
     public void changePassword(Integer employeeId, String oldPlainPassword, String newPlainPassword) {
@@ -182,7 +183,7 @@ public class EmployeeService {
             Connection conn = DbConnection.getConnection();
             EmployeeDAO employeeDAO = new EmployeeDAOImpl(conn);
             return employeeDAO.findAll().stream()
-                    .filter(e -> e.getSalary() == null || e.getSalary() <= 0 || e.getRole() == null)
+                    .filter(e -> e.getSalary() == null || e.getSalary().compareTo(BigDecimal.ZERO) <= 0 || e.getRole() == null)
                     .toList();
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
@@ -191,21 +192,23 @@ public class EmployeeService {
         }
     }
 
-    public Employee calculateAdjustedSalary(Employee e) {
+    public void calculateAdjustedSalary(Employee e) {
         try {
             Connection conn = DbConnection.getConnection();
             EmployeeDAO employeeDAO = new EmployeeDAOImpl(conn);
             if (e.getRole().equals(EmployeeRole.RECEPTIONIST)) {
-                e.setSalary(e.getSalary() * 1.10);
+                e.setSalary(e.getSalary().compareTo(BigDecimal.ZERO) > 0 ? e.getSalary().multiply(BigDecimal.valueOf(1.10)) : BigDecimal.ZERO);
                 // 10% de aumento para recepcionistas
             } else if (e.getRole().equals(EmployeeRole.TRAINER)) {
-                e.setSalary(e.getSalary() * 1.15); // 15% de aumento para treinadores
+                e.setSalary(e.getSalary().compareTo(BigDecimal.ZERO) > 0 ? e.getSalary().multiply(BigDecimal.valueOf(1.15)) : BigDecimal.ZERO); // 15% de aumento para treinadores
             } else if (e.getRole().equals(EmployeeRole.MANAGER)) {
-                e.setSalary(e.getSalary() * 1.20); // 20% de aumento para gerentes
+                e.setSalary(e.getSalary().compareTo(BigDecimal.ZERO) > 0 ? e.getSalary().multiply(BigDecimal.valueOf(1.20)) : BigDecimal.ZERO); // 20% de aumento para gerentes
             }
-            return e;
+            employeeDAO.update(e);
         } catch (Exception exception) {
             throw new ServiceException(exception.getMessage());
+        } finally {
+            DbConnection.closeConnection();
         }
     }
 }

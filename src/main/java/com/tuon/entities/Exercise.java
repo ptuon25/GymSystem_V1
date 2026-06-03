@@ -56,11 +56,11 @@ public class Exercise {
 
     @Override
     public String toString() {
-        return "Exercise{" +
+        return "Exercise{ " +
                 "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", muscleGroup='" + muscleGroup + '\'' +
-                ", dificulty=" + difficulty +
+                ", name=' " + name + '\'' +
+                ", muscleGroup=' " + muscleGroup + '\'' +
+                ", dificulty= " + difficulty +
                 '}';
     }
 }

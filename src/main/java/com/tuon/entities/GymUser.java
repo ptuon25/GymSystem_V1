@@ -99,8 +99,8 @@ public class GymUser {
         return "GymUser{ "
                 + "id= " + getId() + ", " + "name= " + getName() + ", "
                 + "age= " + getAge() + ", "
-                + "height= " + getHeight() + ", "
-                + "weight= " + getWeight() + ", "
+                + "height= " + getHeight() + "m, "
+                + "weight= " + getWeight() + "kg, "
                 + "bmi= " + String.format("%.2f", calculateBMI()) + ", "
                 + "classification= " + bmiClassification() + " }";
     }

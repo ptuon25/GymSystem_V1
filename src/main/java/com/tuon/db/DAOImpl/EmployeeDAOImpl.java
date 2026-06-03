@@ -29,7 +29,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             st.setString(2, employee.getPasswordHash());
             st.setString(3, employee.getName());
             st.setString(4, employee.getRole().name());
-            st.setObject(5, employee.getSalary(), Types.DOUBLE);
+            st.setBigDecimal(5, employee.getSalary());
 
             int rowsAffected = st.executeUpdate();
             if (rowsAffected > 0) {
@@ -67,7 +67,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             st.setString(2, employee.getPasswordHash());
             st.setString(3, employee.getName());
             st.setString(4, employee.getRole().name());
-            st.setObject(5, employee.getSalary(), Types.DOUBLE);
+            st.setBigDecimal(5, employee.getSalary());
             st.setInt(6, employee.getId());
 
             int rowsAffected = st.executeUpdate();
@@ -173,7 +173,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         emp.setPasswordHash(rs.getString("password_hash"));
         emp.setName(rs.getString("name"));
         emp.setRole(EmployeeRole.valueOf(rs.getString("role")));
-        emp.setSalary(rs.getObject("salary", Double.class));
+        emp.setSalary(rs.getBigDecimal("salary"));
         return emp;
     }
 }

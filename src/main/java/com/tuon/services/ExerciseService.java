@@ -4,10 +4,14 @@ import com.tuon.db.DAO.ExerciseDAO;
 import com.tuon.db.DAOImpl.ExerciseDAOImpl;
 import com.tuon.db.connection.DbConnection;
 import com.tuon.entities.Exercise;
+import com.tuon.entities.WorkoutExercise;
+import com.tuon.enums.Difficulty;
 import com.tuon.exceptions.ServiceException;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ExerciseService {
 
@@ -118,6 +122,32 @@ public class ExerciseService {
         }
     }
 
-    
+    public List<Exercise> findByDifficultyAndMuscleGroup(Difficulty difficulty, String muscleGroup) {
+        try {
+            Connection conn = DbConnection.getConnection();
+            ExerciseDAO exerciseDAO = new ExerciseDAOImpl(conn);
+            if (difficulty == null || Difficulty.valueOf(difficulty.name()) == null) {
+                throw new ServiceException("Exercise difficulty cannot be null or empty");
+            }
+            if (muscleGroup == null || muscleGroup.isEmpty()) {
+                throw new ServiceException("Exercise muscle group cannot be null or empty");
+            }
+            return exerciseDAO.findAll().stream()
+                    .filter(exercise -> exercise.getDifficulty() == difficulty && exercise.getMuscleGroup().equalsIgnoreCase(muscleGroup))
+                    .toList();
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage());
+        } finally {
+            DbConnection.closeConnection();
+        }
+    }
 
+    public List<Exercise> bestCombination(Difficulty difficulty, String muscleGroup) {
+
+        Connection conn = DbConnection.getConnection();
+        ExerciseDAO dao = new ExerciseDAOImpl(conn);
+        return dao.findAll().stream().filter(exercise -> exercise.getDifficulty() == difficulty && exercise.getMuscleGroup().equalsIgnoreCase(muscleGroup)).limit(5).toList();
+    }
 }
+
+

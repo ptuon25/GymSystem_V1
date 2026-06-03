@@ -4,6 +4,7 @@ package com.tuon.entities;
 
 import com.tuon.enums.EmployeeRole;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Employee {
@@ -13,7 +14,7 @@ public class Employee {
     private String passwordHash;
     private String name;
     private EmployeeRole role;
-    private Double salary;
+    private BigDecimal salary;
     private LocalDateTime createdAt = LocalDateTime.now();
 
     // construtor vazio
@@ -22,7 +23,7 @@ public class Employee {
     }
 
     // construtor padrão
-    public Employee(Integer id, String username, String passwordHash, String name, EmployeeRole role, Double salary) {
+    public Employee(Integer id, String username, String passwordHash, String name, EmployeeRole role, BigDecimal salary) {
         this.id = id;
         this.username = username;
         this.passwordHash = passwordHash;
@@ -56,11 +57,11 @@ public class Employee {
         this.role = role;
     }
 
-    public Double getSalary() {
+    public BigDecimal getSalary() {
         return salary;
     }
 
-    public void setSalary(Double salary) {
+    public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
 
@@ -91,13 +92,13 @@ public class Employee {
     // toString
     @Override
     public String toString() {
-        return "Employee{" +
+        return "Employee {" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", name='" + name + '\'' +
                 ", role=" + role +
-                ", salary=" + salary +
-                '}';
+                ", salary=" + String.format("$%.2f", salary) +
+                " }";
     }
 
 }
