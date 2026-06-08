@@ -33,7 +33,7 @@ public class DAOTest {
                 GymUserDAO gymUserDAO = new GymUserDAOImpl(conn);
                 GymUser gymUser = new GymUser(null, "John Doe", 20, 1.85, 85.0);
 
-                System.out.println("Testing insert....");
+                System.out.println("\nTesting insert....");
                 gymUserDAO.insert(gymUser);
                 if (gymUser.getId() != null) {
                     System.out.println("ID generated successfully: " + gymUser.getId());
@@ -41,19 +41,19 @@ public class DAOTest {
                     System.err.println("Failed to generate ID for GymUser.");
                 }
 
-                System.out.println("Testing update....");
+                System.out.println("\nTesting update....");
                 gymUser.setAge(21);
                 gymUserDAO.update(gymUser);
                 System.out.println("Updated GymUser: " + gymUser);
 
-                System.out.println("Testing findAll....");
+                System.out.println("\nTesting findAll....");
                 gymUserDAO.findAll().forEach(System.out::println);
 
-                System.out.println("Testing findById....");
+                System.out.println("\nTesting findById....");
                 GymUser found = gymUserDAO.findById(gymUser.getId());
                 System.out.println("Found GymUser by ID: " + found);
 
-                System.out.println("Testing delete....");
+                System.out.println("\nTesting delete....");
                 gymUserDAO.deleteById(gymUser.getId());
                 System.out.println("Deleted GymUser with ID: " + gymUser.getId());
 
@@ -69,7 +69,7 @@ public class DAOTest {
                 EmployeeDAO employeeDAO = new EmployeeDAOImpl(conn);
                 Employee employee = new Employee(null, "jsmith", "123123", "John Smith", EmployeeRole.TRAINER, BigDecimal.valueOf(3000.00));
 
-                System.out.println("Testing insert....");
+                System.out.println("\nTesting insert....");
                 employeeDAO.insert(employee);
                 if (employee.getId() != null) {
                     System.out.println("ID generated successfully: " + employee.getId());
@@ -77,23 +77,23 @@ public class DAOTest {
                     System.err.println("Failed to generate ID for Employee.");
                 }
 
-                System.out.println("Testing update....");
+                System.out.println("\nTesting update....");
                 employee.setSalary(BigDecimal.valueOf(3200.00));
                 employeeDAO.update(employee);
                 System.out.println("Updated Employee: " + employee);
 
-                System.out.println("Testing findAll....");
+                System.out.println("\nTesting findAll....");
                 employeeDAO.findAll().forEach(System.out::println);
 
-                System.out.println("Testing findById....");
+                System.out.println("\nTesting findById....");
                 Employee found = employeeDAO.findById(employee.getId());
                 System.out.println("Found Employee by ID: " + found);
 
-                System.out.println("Testing findByUsername....");
+                System.out.println("\nTesting findByUsername....");
                 Employee foundUser = employeeDAO.findByUsername(employee.getUsername());
                 System.out.println("Found Employee by username: " + foundUser);
 
-                System.out.println("Testing delete....");
+                System.out.println("\nTesting delete....");
                 employeeDAO.deleteById(employee.getId());
                 System.out.println("Deleted Employee with ID: " + employee.getId());
 
@@ -109,7 +109,7 @@ public class DAOTest {
                 ExerciseDAO exerciseDAO = new ExerciseDAOImpl(conn);
                 Exercise exercise = new Exercise(null, ")Bench Press", "Chest exercise", Difficulty.MEDIUM);
 
-                System.out.println("Testing insert....");
+                System.out.println("\nTesting insert....");
                 exerciseDAO.insert(exercise);
                 if (exercise.getId() != null) {
                     System.out.println("ID generated successfully: " + exercise.getId());
@@ -117,19 +117,19 @@ public class DAOTest {
                     System.err.println("Failed to generate ID for Exercise.");
                 }
 
-                System.out.println("Testing update....");
+                System.out.println("\nTesting update....");
                 exercise.setDifficulty(Difficulty.HARD);
                 exerciseDAO.update(exercise);
                 System.out.println("Updated Exercise: " + exercise);
 
-                System.out.println(("Testing findAll...."));
+                System.out.println(("\nTesting findAll...."));
                 exerciseDAO.findAll().forEach(System.out::println);
 
-                System.out.println("Testing findById....");
+                System.out.println("\nTesting findById....");
                 Exercise found = exerciseDAO.findById(exercise.getId());
                 System.out.println("Found Exercise by ID: " + found);
 
-                System.out.println("Testing findExercisesByWorkoutId....");
+                System.out.println("\nTesting findExercisesByWorkoutId....");
                 GymUserDAO gymUserDAO = new GymUserDAOImpl(conn);
                 GymUser gymUser = new GymUser(null, "John Doe", 20, 1.85, 85.0);
                 gymUserDAO.insert(gymUser);
@@ -145,7 +145,7 @@ public class DAOTest {
                 workoutDAO.deleteById(workout.getId());
                 gymUserDAO.deleteById(gymUser.getId());
 
-                System.out.println("Testing deleteById....");
+                System.out.println("\nTesting deleteById....");
                 exerciseDAO.deleteById(exercise.getId());
                 System.out.println("Deleted Exercise with ID: " + exercise.getId());
 
@@ -169,25 +169,24 @@ public class DAOTest {
                 WorkoutExerciseDAO workoutExerciseDAO = new WorkoutExerciseDAOImpl(conn);
                 WorkoutExercise workoutExercise = new WorkoutExercise(null, exercise, workout.getId(), 4, 5, 75.00, 60, 1);
 
-                System.out.println("Testing insert....");
+                System.out.println("\nTesting insert....");
+                workoutExerciseDAO.insert(workoutExercise);
                 if (workoutExercise.getId() != null) {
                     System.out.println("ID generated successfully: " + workoutExercise.getId());
                 } else {
                     System.err.println("Failed to generate ID for WorkoutExercise.");
                 }
-                workoutExerciseDAO.insert(workoutExercise);
-                System.out.println("Inserted WorkoutExercise: " + workoutExercise);
 
-                System.out.println("Testing update....");
+                System.out.println("\nTesting update....");
                 workoutExercise.setReps(6);
                 workoutExercise.setWeight(80.00);
                 workoutExerciseDAO.update(workoutExercise);
                 System.out.println("Updated WorkoutExercise: " + workoutExercise);
 
-                System.out.println("Testing findByWorkoutId....");
+                System.out.println("\nTesting findByWorkoutId....");
                 workoutExerciseDAO.findByWorkoutId(workout.getId()).forEach(System.out::println);
 
-                System.out.println("Testing deleteByWorkoutId....");
+                System.out.println("\nTesting deleteByWorkoutId....");
                 workoutExerciseDAO.deleteByWorkoutId(workout.getId());
                 System.out.println("Deleted WorkoutExercises with Workout ID: " + workout.getId());
                 workoutDAO.deleteById(workout.getId());
@@ -209,28 +208,28 @@ public class DAOTest {
                 WorkoutDAO workoutDAO = new WorkoutDAOImpl(conn);
                 Workout workout = new Workout(null, "Workout 01", gymUser.getId(), WorkoutStatus.PLANNED, LocalDateTime.now());
 
-                System.out.println("Testing insert....");
+                System.out.println("\nTesting insert....");
+                workoutDAO.insert(workout);
                 if (workout.getId() != null) {
                     System.out.println("ID generated successfully: " + workout.getId());
                 } else {
                     System.err.println("Failed to generate ID for Workout.");
                 }
-                workoutDAO.insert(workout);
                 System.out.println("Inserted Workout: " + workout);
 
-                System.out.println("Testing update....");
+                System.out.println("\nTesting update....");
                 workout.setStatus(WorkoutStatus.COMPLETED);
                 workoutDAO.update(workout);
                 System.out.println("Updated Workout: " + workout);
 
-                System.out.println("Testing findAll....");
+                System.out.println("\nTesting findAll....");
                 workoutDAO.findAll().forEach(System.out::println);
 
-                System.out.println("Testing findById....");
+                System.out.println("\nTesting findById....");
                 Workout found = workoutDAO.findById(workout.getId());
                 System.out.println("Found Workout by ID: " + found);
 
-                System.out.println("Testing deleteById....");
+                System.out.println("\nTesting deleteById....");
                 workoutDAO.deleteById(workout.getId());
                 gymUserDAO.deleteById(gymUser.getId());
                 System.out.println("Deleted Workout with ID: " + workout.getId());
@@ -250,7 +249,7 @@ public class DAOTest {
                 AuditLogDAO auditLogDAO = new AuditLogDAOImpl(conn);
                 AuditLog auditLog = new AuditLog(null, employee.getId(), AuditAction.CREATE, EntityType.EMPLOYEE, employee.getId(), "Successful create", true, LocalDateTime.now());
 
-                System.out.println("Testing insert....");
+                System.out.println("\nTesting insert....");
                 auditLogDAO.insert(auditLog);
                 if (auditLog.getId() != null) {
                     System.out.println("ID generated successfully: " + auditLog.getId());
@@ -258,28 +257,28 @@ public class DAOTest {
                     System.err.println("Failed to generate ID for AuditLog.");
                 }
 
-                System.out.println("Testing findAll....");
+                System.out.println("\nTesting findAll....");
                 auditLogDAO.findAll().forEach(System.out::println);
 
-                System.out.println("Testing findByEmployee....");
+                System.out.println("\nTesting findByEmployee....");
                 List<AuditLog> found = auditLogDAO.findByEmployee(employee.getId());
                 System.out.println("Found AuditLog by Employee ID: " + found);
 
-                System.out.println("Testing findByAction....");
+                System.out.println("\nTesting findByAction....");
                 List<AuditLog> foundAction = auditLogDAO.findByAction(AuditAction.CREATE);
                 System.out.println("Found AuditLog by Action: " + foundAction);
 
-                System.out.println("Testing findByEntityType....");
+                System.out.println("\nTesting findByEntityType....");
                 List<AuditLog> foundType = auditLogDAO.findByEntityType(EntityType.EMPLOYEE);
                 System.out.println("Found AuditLog by Entity Type: " + foundType);
 
-                System.out.println("Testing findByDateRange....");
+                System.out.println("\nTesting findByDateRange....");
                 LocalDateTime start = LocalDateTime.now().minusDays(1);
                 LocalDateTime end = LocalDateTime.now().plusDays(1);
                 List<AuditLog> foundDateRange = auditLogDAO.findByDateRange(start, end);
                 System.out.println("Found AuditLog by Date Range: " + foundDateRange);
 
-                System.out.println("Testing findByEmployeeAndAction....");
+                System.out.println("\nTesting findByEmployeeAndAction....");
                 List<AuditLog> foundEmployeeAction = auditLogDAO.findByEmployeeAndAction(employee.getId(), AuditAction.CREATE);
                 System.out.println("Found AuditLog by Employee and Action: " + foundEmployeeAction);
 
@@ -297,6 +296,7 @@ public class DAOTest {
             DbConnection.closeConnection();
             System.out.println("Database connection closed ✅\n");
             System.out.println("========== DAO TESTS COMPLETED ==========");
+            // Successfully test
         }
     }
 }

@@ -5,9 +5,7 @@
 
 package com.tuon.app;
 
-import com.tuon.db.connection.DbConnection;
-import com.tuon.entities.GymUser;
-
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -16,22 +14,10 @@ public class Main {
 
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
-
         System.out.println("====Gym System V1====\n\n");
 
-        System.out.println("Testing database connection...\n");
 
-        DbConnection.getConnection();
-
-        System.out.println("Database connection successful!\n");
-
-        var gymUser = new GymUser(null, "John Doe", 30, 1.75, 70.0);
-        System.out.println("Created GymUser: " + gymUser);
 
         sc.close();
-
-        DbConnection.closeConnection();
-
-        System.out.println("\nDatabase connection closed.");
     }
 }

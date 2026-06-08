@@ -7,10 +7,7 @@ import com.tuon.entities.WorkoutExercise;
 import com.tuon.enums.Difficulty;
 import com.tuon.exceptions.DbException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 public class WorkoutExerciseDAOImpl implements WorkoutExerciseDAO {
@@ -32,7 +29,7 @@ public class WorkoutExerciseDAOImpl implements WorkoutExerciseDAO {
                         (workout_id, exercise_id, sets, reps, weight, rest_seconds, position)
                         VALUES (?, ?, ?, ?, ?, ?, ?)
                     """;
-            st = conn.prepareStatement(sql1);
+            st = conn.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
             st.setInt(1, workoutExercise.getWorkoutId());
             st.setInt(2, workoutExercise.getExercise().getId());
             st.setInt(3, workoutExercise.getSets());
@@ -40,8 +37,17 @@ public class WorkoutExerciseDAOImpl implements WorkoutExerciseDAO {
             st.setDouble(5, workoutExercise.getWeight());
             st.setInt(6, workoutExercise.getRestSeconds());
             st.setInt(7, workoutExercise.getPosition());
+            int rowsAffected = st.executeUpdate();
+            if(rowsAffected > 0) {
+                ResultSet rs = st.getGeneratedKeys();
+                if (rs.next()) {
+                    workoutExercise.setId(rs.getInt(1));
+                }
+                DbConnection.closeResultSet(rs);
+            }
 
-            st.executeUpdate();
+
+
 
         } catch (SQLException e) {
             throw new DbException(e.getMessage());

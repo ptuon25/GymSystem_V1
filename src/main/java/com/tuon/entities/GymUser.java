@@ -38,7 +38,7 @@ public class GymUser {
         double bmi = calculateBMI();
 
         if (bmi == 0.0) {
-            return "Unknow";
+            return "Unknown";
         }
 
         if (bmi < 18.5) {

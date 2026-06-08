@@ -111,11 +111,17 @@ public class GymUserService {
         }
     }
 
-    public List<GymUser> findInvalidUser(){
+    public List<GymUser> findInvalidUsers(){
         try{
             Connection conn = DbConnection.getConnection();
             GymUserDAO userDAO = new GymUserDAOImpl(conn);
-            return userDAO.findAll().stream().filter(user -> user.getAge() <= 0 || user.getAge() > 100 || user.getHeight() <= 0 || user.getWeight() <= 0).toList();
+            return userDAO.findAll().stream().filter(user -> user.getAge() == null
+                    || user.getAge() <= 0
+                    || user.getAge() > 100
+                    || user.getHeight() == null
+                    || user.getHeight() <= 0
+                    || user.getWeight() == null
+                    || user.getWeight() <= 0).toList();
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
         } finally {
@@ -124,7 +130,7 @@ public class GymUserService {
         }
     }
 
-    public List<GymUser> classifyFitnessLevel(GymUser user){
+    public List<GymUser> getUsersOrderedByBMI(){
         try{
             Connection conn = DbConnection.getConnection();
             GymUserDAO userDAO = new GymUserDAOImpl(conn);

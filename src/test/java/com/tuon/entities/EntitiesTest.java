@@ -77,5 +77,6 @@ public class EntitiesTest {
         }
 
         System.out.println("========== ENTITIES OBJECT TEST COMPLETED ==========");
+        // Successfully test
     }
 }

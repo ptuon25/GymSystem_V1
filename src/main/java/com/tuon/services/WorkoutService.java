@@ -24,7 +24,7 @@ public class WorkoutService {
             return workout;
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
-        }finally {
+        } finally {
             DbConnection.closeConnection();
         }
     }
@@ -33,9 +33,6 @@ public class WorkoutService {
 
         if (workout == null) {
             throw new ServiceException("Workout cannot be null");
-        }
-        if (workout.getId() == null) {
-            throw new ServiceException("Workout id cannot be null");
         }
         if (workout.getName() == null || workout.getName().isEmpty()) {
             throw new ServiceException("Workout name cannot be null or empty");
@@ -51,12 +48,6 @@ public class WorkoutService {
         }
         if (workout.getDate() == null) {
             throw new ServiceException("Workout date cannot be null");
-        }
-        if (workout.getDate().isBefore(LocalDateTime.now())) {
-            throw new ServiceException("Workout date cannot be in the past");
-        }
-        if (workout.getWorkoutExercises() == null || workout.getWorkoutExercises().isEmpty()) {
-            throw new ServiceException("Workout exercises cannot be null or empty");
         }
     }
 
@@ -78,7 +69,7 @@ public class WorkoutService {
         if (workout == null) {
             throw new ServiceException("Workout cannot be null");
         }
-        if (workout.getId() == null || workout.getId() <= 0) {
+        if (workout.getId() <= 0) {
             throw new ServiceException("Workout id must be greater than 0");
         }
         if (workout.getName() == null || workout.getName().isEmpty()) {
@@ -89,12 +80,6 @@ public class WorkoutService {
         }
         if (workout.getDate() == null) {
             throw new ServiceException("Workout date cannot be null");
-        }
-        if (workout.getDate().isBefore(LocalDateTime.now())) {
-            throw new ServiceException("Workout date cannot be in the past");
-        }
-        if (workout.getWorkoutExercises() == null || workout.getWorkoutExercises().isEmpty()) {
-            throw new ServiceException("Workout exercises cannot be empty");
         }
     }
 

@@ -6,7 +6,7 @@ import com.tuon.db.connection.DbConnection;
 import com.tuon.entities.Employee;
 import com.tuon.enums.EmployeeRole;
 import com.tuon.exceptions.ServiceException;
-import com.tuon.services.passwords.PasswordUtil;
+import com.tuon.util.PasswordUtil;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -192,7 +192,7 @@ public class EmployeeService {
         }
     }
 
-    public void calculateAdjustedSalary(Employee e) {
+    public void applySalaryAdjustment(Employee e) {
         try {
             Connection conn = DbConnection.getConnection();
             EmployeeDAO employeeDAO = new EmployeeDAOImpl(conn);

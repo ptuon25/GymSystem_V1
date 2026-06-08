@@ -2,6 +2,7 @@ package com.tuon.db;
 
 import com.tuon.db.connection.DbConnection;
 import com.tuon.exceptions.DbException;
+import com.tuon.util.db.DbCleaner;
 
 import java.sql.Connection;
 
@@ -14,6 +15,8 @@ public class ConnectionTest {
 
             System.out.println("Connection object: " + conn);
 
+            DbConnection.closeConnection();
+
             System.out.println("Closing connection...");
 
         } catch (Exception e) {
@@ -22,6 +25,8 @@ public class ConnectionTest {
         }
 
         System.out.println("========== DATABASE CONNECTION TEST COMPLETED ==========");
+
+        // Successfully test
 
     }
 }
