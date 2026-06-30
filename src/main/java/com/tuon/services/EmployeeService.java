@@ -129,6 +129,8 @@ public class EmployeeService {
             employeeDAO.deleteById(id);
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
+        } finally {
+            DbConnection.closeConnection();
         }
     }
 
@@ -157,6 +159,8 @@ public class EmployeeService {
             return e;
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
+        } finally {
+            DbConnection.closeConnection();
         }
     }
 

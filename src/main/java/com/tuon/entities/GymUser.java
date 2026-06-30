@@ -96,7 +96,7 @@ public class GymUser {
     // toString
     @Override
     public String toString() {
-        return "GymUser{ "
+        return "GymUser { "
                 + "id= " + getId() + ", " + "name= " + getName() + ", "
                 + "age= " + getAge() + ", "
                 + "height= " + getHeight() + "m, "
